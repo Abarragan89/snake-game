@@ -13,7 +13,16 @@ var heightInBlocks = height/blockSize;
 
 //Set the score
 var score = 0;
-
+    //Get high score and display
+    if (localStorage.getItem('highscore') === null){
+        $('#highscore').text('0');
+        $('#player').text('Name');
+    } else {
+        let highscore = localStorage.getItem('highscore');
+        let player = localStorage.getItem('player');
+        $('#highscore').text(highscore);
+        $('#player').text(player);
+    }
 //Draw the border
 var drawBorder = function () {
     ctx.fillStyle = "Navy";
@@ -24,22 +33,17 @@ var drawBorder = function () {
 };
 
 //Draw the score in top-left corner
-var drawScore = function () {
-    ctx.font = "25px TimesNewRoman";
-    ctx.fillStyle = "Black";
-    ctx.textAlign = "left";
-    ctx.textBaseline = "top";
-    ctx.fillText ("Score: " + score, blockSize, blockSize);
-};
+var drawScore = function() {
+    $("#score").text(score)
+}
 
 //Clear the interval and display Game Over text
 var gameOver = function() {
+    $("#reset").css('display', 'block');
+    setHighscore();
     playing = false;
-    ctx.font = "30px Courier";
-    ctx.fillStyle = "Red";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText("Game Over", width / 2, height / 2);
+    $("#banner").css('display', 'block');
+    $("#banner").text("GAME OVER");
 };
 
 
@@ -93,6 +97,10 @@ var Snake = function () {
         ];
     this.direction = "right";
     this.nextDirection = "right";
+    this.destroy = function(baseObject, refName) {
+        delete baseObject[refName];
+    };
+
 };
 
 //Draw a square for each segment of the snake's body
@@ -207,25 +215,37 @@ Apple.prototype.move = function (occupiedBlocks) {
 var snake = new Snake();
 var apple = new Apple();
 
-var playing = true;
+var playing = false;
 var animationTime = 60;
 
 //Create a game loop function, which will call itself using setTimeout
 var gameLoop = function () {
+    $("#reset").css('display', 'none')
+    playing = true;
+    $("#banner").css('display', 'none')
     ctx.clearRect(0,0,width, height);
     drawScore();
     snake.move();
     snake.draw();
     apple.draw();
     drawBorder();
-
     if (playing) {
         setTimeout(gameLoop, animationTime);
     }
 };
-
 //Start the game Loop
-gameLoop();
+$("#canvas").click(function() {
+    if (playing) {
+        return;
+    } else {
+        gameLoop();
+    }
+})
+$("#reset").css('display', 'none');
+// Reset the Game
+$("#reset").click(function () {
+    window.location.reload(true);
+})
 
 //Convert keycodes to directions
 var directions = {
@@ -242,3 +262,44 @@ $("body").keydown(function (event) {
         snake.setDirection(newDirection);
     }
 });
+
+function setHighscore() {
+    //check if there is a highscore. If not, set one
+    if (localStorage.getItem('highscore') === null) {
+        let name = prompt('New High Score!\nEnter your name.');
+        if (name === null) {name = 'anonymous'}
+        localStorage.setItem('highscore', score);
+        localStorage.setItem('player', name);
+        let newScore = localStorage.getItem('highscore');
+        let newPlayer = localStorage.getItem('player')
+        $('#highscore').text(newScore);
+        $('#player').text(newPlayer);
+        $('#message').text('Congratulations!')
+
+    //If there is a highscore, see if current is bigger
+    } else if (score > localStorage.getItem('highscore')) {
+        let name = prompt('New High Score!\nEnter your name.');
+        if (name === null) {name = 'anonymous'}
+        localStorage.setItem('highscore', score);
+        localStorage.setItem('player', name);
+        let newScore = localStorage.getItem('highscore');
+        let newPlayer = localStorage.getItem('player')
+        $('#highscore').text(newScore);
+        $('#player').text(newPlayer);
+    }
+}
+$('#reset-highscore').click (function () {
+    localStorage.removeItem('highscore');
+    localStorage.removeItem('player');
+    $("#highscore").text('0');
+    $("#player").text('');
+})
+
+// Game Sound Functions
+function correctNoise() {
+    if ($('#correct').play()) {
+        $('#correct').pause();
+        $('#correct').currentTime = 0;
+    }
+    $('#correct').play();
+}

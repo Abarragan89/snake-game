@@ -5,9 +5,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="media-queries.css">
+    <audio id='correct'>
+        <source src = "music/correct.mp3" type='audio/mp3'>
+        <source src = "music/correct.ogg" type='audio/ogg'>
+    </audio>
 </head>
 <body>
-    <canvas id = "canvas" width = "500" height = "500"></canvas>
+<!-- Header -->
+    <header>
+        <h1>Snake Game</h1>
+        <div id="header-info">
+            <div id="highscore-info">
+                <h2>High Score: <span id="highscore"></span></h2>
+                <h2>Snake Leader: <span id="player"></span></h2>
+            </div>
+            <input type="button" id="reset-highscore" value="Reset High Score">
+        </div>
+        
+    </header>
+<!-- Canvas -->
+    <div class="start-menu">
+        <h3 id="banner">Click to start</h3>
+    </div>
+    <h4>Score: <span id="score"></span></h4>
+    <canvas id ="canvas" width = "500" height = "500"></canvas>
+    <input type="button" id="reset" value="reset">
+<!-- Scripts -->
 	<script src = "https://code.jquery.com/jquery-2.1.0.js"></script>
     <script src="index.js"></script>
 </body>
