@@ -11,6 +11,10 @@
         <source src = "music/correct.mp3" type='audio/mp3'>
         <source src = "music/correct.ogg" type='audio/ogg'>
     </audio>
+    <audio id="game-over">
+        <source src="music/game_over.mp3" type="audio/mp3">
+        <source src="music/game_over.ogg" type="audio/ogg">
+    </audio>
 </head>
 <body>
 <!-- Header -->
@@ -18,22 +22,31 @@
         <h1>Snake Game</h1>
         <div id="header-info">
             <div id="highscore-info">
-                <h2>High Score: <span id="highscore"></span></h2>
-                <h2>Snake Leader: <span id="player"></span></h2>
+                <div class='flex-row'>
+                    <h2>High Score:</h2>
+                    <span id="highscore"></span>
+                </div>
+                <div class="flex-row">
+                    <h2>Snake Leader:</h2>
+                    <span id="player"></span>
+                </div>
+                <input type="button" id="reset-highscore" value="Reset High Score">
             </div>
-            <input type="button" id="reset-highscore" value="Reset High Score">
         </div>
         
     </header>
 <!-- Canvas -->
     <div class="start-menu">
-        <h3 id="banner">Click to start</h3>
+        <h3 id="banner">Click Here to Start!</h3>
+        <h4>Score: <span id="score"></span></h4>
+        <input type="button" id="reset" value="reset">
     </div>
-    <h4>Score: <span id="score"></span></h4>
-    <canvas id ="canvas" width = "500" height = "500"></canvas>
-    <input type="button" id="reset" value="reset">
+    <div id="canvas-div">
+        <canvas id ="canvas" height="500" width="500"></canvas>
+    </div>
 <!-- Scripts -->
 	<script src = "https://code.jquery.com/jquery-2.1.0.js"></script>
     <script src="index.js"></script>
+    <script src="OSC.js"></script>
 </body>
 </html>

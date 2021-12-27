@@ -16,7 +16,7 @@ var score = 0;
     //Get high score and display
     if (localStorage.getItem('highscore') === null){
         $('#highscore').text('0');
-        $('#player').text('Name');
+        $('#player').text('No Current Leader');
     } else {
         let highscore = localStorage.getItem('highscore');
         let player = localStorage.getItem('player');
@@ -36,14 +36,17 @@ var drawBorder = function () {
 var drawScore = function() {
     $("#score").text(score)
 }
-
+$("#score").text("0");
 //Clear the interval and display Game Over text
 var gameOver = function() {
-    $("#reset").css('display', 'block');
+    $("#reset").css('opacity', '1');
     setHighscore();
     playing = false;
-    $("#banner").css('display', 'block');
+    $("#banner").css('opacity', '1');
+    $("#banner").css('backgroundColor', 'rgb(114, 16, 16)');
+    $("#banner").css('color', 'white');
     $("#banner").text("GAME OVER");
+    gameOverNoise();
 };
 
 
@@ -148,6 +151,7 @@ Snake.prototype.move = function () {
         score++;
         animationTime -= 2;
         apple.move(this.segments);
+        correctNoise();
     } else {
         this.segments.pop();
     }
@@ -220,9 +224,9 @@ var animationTime = 60;
 
 //Create a game loop function, which will call itself using setTimeout
 var gameLoop = function () {
-    $("#reset").css('display', 'none')
+    $("#reset").css('opacity', '0');
     playing = true;
-    $("#banner").css('display', 'none')
+    $("#banner").css('opacity', '0');
     ctx.clearRect(0,0,width, height);
     drawScore();
     snake.move();
@@ -234,14 +238,14 @@ var gameLoop = function () {
     }
 };
 //Start the game Loop
-$("#canvas").click(function() {
+$(".start-menu").click(function() {
     if (playing) {
         return;
     } else {
         gameLoop();
     }
 })
-$("#reset").css('display', 'none');
+$("#reset").css('opacity', '0');
 // Reset the Game
 $("#reset").click(function () {
     window.location.reload(true);
@@ -274,7 +278,6 @@ function setHighscore() {
         let newPlayer = localStorage.getItem('player')
         $('#highscore').text(newScore);
         $('#player').text(newPlayer);
-        $('#message').text('Congratulations!')
 
     //If there is a highscore, see if current is bigger
     } else if (score > localStorage.getItem('highscore')) {
@@ -292,14 +295,38 @@ $('#reset-highscore').click (function () {
     localStorage.removeItem('highscore');
     localStorage.removeItem('player');
     $("#highscore").text('0');
-    $("#player").text('');
+    $("#player").text('No Current Leader');
 })
 
 // Game Sound Functions
+// function correctNoise() {
+//     if ($('#correct').play()) {
+//         $('#correct').pause();
+//         $('#correct').currentTime = 0;
+//     }
+//     $('#correct').play();
+// }
+
+//correct sound function
 function correctNoise() {
-    if ($('#correct').play()) {
-        $('#correct').pause();
-        $('#correct').currentTime = 0;
+    if (O('correct').play()) {
+        O('correct').pause();
+        O('correct').currentTime = 0;
     }
-    $('#correct').play();
+    O('correct').play();
 }
+function gameOverNoise() {
+    O('game-over').play();
+}
+
+// window.onresize = windowResize;
+
+
+// function windowResize () {
+//     width = window.innerHeight;
+//     height = window.innerHeight;
+//     $("#canvas").setAttribute('width', 'width');
+//     $("#canvas").setAttribute('height', 'height');
+//     $(".start-menu").setAttribute('height', 'height');
+//     $(".start-menu").setAttribute('width', 'width');
+// }

@@ -1,5 +1,27 @@
-@media screen and (max-width:768px) {
-    header h2 {
-        padding-left: 12vw;
+@media only screen and (max-width: 1024px) {
+    #canvas, .start-menu {
+        width: 500px;
+        height: 500px;
     }
 }
+@media only screen and (max-width: 768px) {
+    #canvas, .start-menu {
+        width: 400px;
+        height: 400px;
+    }
+    .start-menu {
+        border-width: 4px;
+        margin-top: 75px;
+    }
+}
+@media only screen and (max-width: 470px) {
+    #canvas, .start-menu {
+        width: 300px;
+        height: 300px;
+    }
+    .start-menu {
+        border-width: 4px;
+        margin-top: 75px;
+    }
+}
+
