@@ -1,27 +1,31 @@
 @media only screen and (max-width: 1024px) {
-    #canvas, .start-menu {
+    #canvas, #canvas-div, .start-menu {
         width: 500px;
         height: 500px;
     }
+    .start-menu h4 {
+        font-size: 3vw;
+    }
 }
 @media only screen and (max-width: 768px) {
-    #canvas, .start-menu {
+    #canvas, #canvas-div, .start-menu {
         width: 400px;
         height: 400px;
+        margin-top: 100px;
     }
     .start-menu {
-        border-width: 4px;
-        margin-top: 75px;
+        border-width: 8px;
+        
     }
 }
 @media only screen and (max-width: 470px) {
-    #canvas, .start-menu {
+    #canvas, #canvas-div, .start-menu {
         width: 300px;
         height: 300px;
+        margin-top: 100px;
     }
     .start-menu {
-        border-width: 4px;
-        margin-top: 75px;
+        border-width: 6px;
     }
 }
 
